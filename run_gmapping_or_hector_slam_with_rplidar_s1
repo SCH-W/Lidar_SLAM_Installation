@@ -1,0 +1,21 @@
+1、下载rplidar_ros
+cd ~/slam_ws/src
+git clone https://github.com/Slamtec/rplidar_ros 
+
+2、运行gmapping
+cd ~/slam_ws/src/slam_gmapping/gmapping/launch
+vim gmapping_demo.launch     //新建启动luanch文件
+vim slam_gmapping_pr2.launch //修改原launch文件
+cd ~/slam_ws/
+
+catkin_make 
+source devel/setup.bash
+roslaunch rplidar_ros rplidar_s1.launch
+roslaunch gmapping gmapping_demo.launch
+
+3、运行hector_slam
+cd ~/slam_ws/src/hector_slam/hector_mapping/launch
+vim hector_slam_demo.launch  //新建启动文件
+vim mapping_default.launch   //修改原文件
+后续步骤同上
+roslaunch hectr_mapping hector_slam_demo.launch
