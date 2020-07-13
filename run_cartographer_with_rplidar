@@ -1,0 +1,19 @@
+1、	cd ~/catkin_google_ws/src/cartographer_ros/cartographer_ros/configuration
+复制revo_lds.lua，改为revo_lds_rplidar.lua，将tracking_frame和published_name改为”laser”。
+
+2、cd ~/catkin_google_ws/src/cartographer_ros/cartographer_ros/launch
+   复制demo_revo_lds.launch，改为demo_revo_lds_rplidar.launch，
+   将configuration_basename后revo_lds.lua换成revo_lds_rplidar.lua，
+   <remap from ”scan” to “horizontal_laser_2d”/>更改为<remap from “scan” to “scan”/>
+
+3、cd  ~/catkin_google_ws
+   catkin_make_isolated  –install  --use-ninja
+   source install_isolated/setup.bash
+   若刷新整个系统的工作空间
+   echo “source ~/catkin_google_ws/install_isolated/setup.bash” >> ~/.bashrc
+   source ~/.bashrc
+
+4、打开终端，启动roscore
+   分别打开另外两个终端，先后输入
+   roslaunch  rplidar_ros  rplidar.launch
+   roslaunch  cartographer_ros  demo_revo_lds_rplidar.launch
