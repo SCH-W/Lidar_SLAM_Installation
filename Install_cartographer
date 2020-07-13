@@ -1,0 +1,59 @@
+一、安装ceres-solver
+1、安装依赖库
+sudo apt-get install -y \
+    g++ \
+    git \
+    google-mock \
+    libboost-all-dev \
+    libcairo2-dev \
+    libeigen3-dev \
+    libgflags-dev \
+    libgoogle-glog-dev \
+    liblua5.2-dev \
+    libsuitesparse-dev \
+    ninja-build \
+    python-sphinx
+
+2. 安装ceres-solver
+google提供的地址下载太慢，在github上git clone 也是太慢， 索性直接Donload zip，保存路径任意
+https://github.com/ceres-solver/ceres-solver.git
+或者
+先解压，然后编译安装：
+cd ceres-solver
+mkdir build
+cd build
+cmake ..
+make
+sudo make install
+
+二、安装cartographer
+1、安装wstool and rosdep.
+sudo apt-get update
+sudo apt-get install -y python-wstool python-rosdep ninja-build
+
+2、在‘catkin_ws’内创建工作空间
+mkdir catkin_google_ws
+cd catkin_google_ws
+wstool init src
+
+3、合并cartographer_ros.rosinstall文件并获取依赖项的代码
+wstool merge -t src
+https://raw.githubusercontent.com/googlecartographer/cartographer_ros/master/cartographer_ros.rosinstall
+//在这一步可能会显示无法下载cere-solver,此时将上面编译过的ceres-solver文件移动到catkin_ws/src下
+wstool update -t src
+
+4、安装proto3
+cd catkin_ws/src/cartographer/scripts
+sudo ./install_proto3.sh
+
+5、安装deb依赖项
+sudo rosdep init
+rosdep update
+rosdep install --from-paths src --ignore-src --rosdistro=kinetic –y
+//安装的ROS是kinetic版本，故kinetic，若ROS是indigo，则indigo
+
+6、编译
+catkin_make_isolated --install --use-ninja
+source install_isolated/setup.bash
+
+
