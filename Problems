@@ -1,0 +1,38 @@
+在树莓派上出现的问题:
+1、安装proto3显示：
+###
+error: RPC failed; curl 18 transfer closed with outstanding read data remaining
+fatal: The remote end hung up unexpectedly
+fatal: early EOF
+fatal: index-pack failed
+###
+原因：因为项目太久，资源文件太大
+解决方案：终端输入：git config --global http.postBuffer 524288000
+然后重新输入：sudo ./install_proto3 即可
+
+2、最后一步编译catkin_make_install –install –use-ninja到最后时显示：
+(1)
+###
+<==Failed to process package 'cartographer_ws':
+Command '['/home/ubuntu/cartographer_ws/install_isolated/env.sh', 'ninja', '-j4','-l4']' returned non-zero exit status 1
+
+Reproduce this error by running:
+==> cd /home/ubuntu/cartographer_ws/build_isolated/cartographer && /home/ubuntu/cartographer_ws/install_isolated/env.sh ninja -j4 -l4
+###
+原因：ros自带proto2，版本太低不适用于cartographer
+解决方案是卸载proto2：sudo apt-get remove libprotobuf-dev
+安装proto3的依赖项：sudo apt-get install autoconf automake libtool curl make g++ unzip
+
+(2)
+###
+c++: internal compiler error: Killed (program cc1plus)
+Please submit a full bug report,
+with preprocessed source if appropriate
+###
+原因：编译过程中内存不够
+解决方案：
+sudo dd if=/dev/zero of=/swapfile bs=1k count=2048000
+sudo mkswap /swapfile
+sudo swapon /swapfile
+
+ 
