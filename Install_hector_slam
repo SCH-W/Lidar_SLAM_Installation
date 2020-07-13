@@ -1,0 +1,18 @@
+1、	创建工作空间
+mkdir –p ~/slam_ws/src
+初始化工作空间
+cd ~/slam_ws/src
+catkin_init_workspace
+
+2、	添加功能包
+cd ~/slam_ws/src
+git clone https://github.com/tu-darmstadt-ros-pkg/hector_slam //hector_slam
+
+3、	编译
+cd ~/slam_ws
+catkin_make  //编译
+source devel/setup.bash  //刷新工作空间
+
+若刷新整个系统的工作空间
+echo “source ~/slam_ws/devel/setup.bash” >> ~/.bashrc
+source ~/.bashrc
