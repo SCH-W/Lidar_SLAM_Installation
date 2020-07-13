@@ -18,6 +18,7 @@ sudo apt-get install -y \
 google提供的地址下载太慢，在github上git clone 也是太慢， 索性直接Donload zip，保存路径任意
 https://github.com/ceres-solver/ceres-solver.git
 或者
+https://github.com/SCH-W/Lidar_SLAM_Installation/blob/master/ceres-solver.zip
 先解压，然后编译安装：
 cd ceres-solver
 mkdir build
